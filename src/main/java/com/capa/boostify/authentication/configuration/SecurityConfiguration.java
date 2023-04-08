@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/user/**")
                 .hasAnyAuthority("USER","ADMIN","BOOSTER")
                 .requestMatchers("/api/booster/**")
-                .hasAnyAuthority("BOOSTER")
+                .hasAnyAuthority("BOOSTER","ADMIN")
                 .requestMatchers("/api/admin/**")
                 .hasAnyAuthority("ADMIN")
                 .anyRequest()
