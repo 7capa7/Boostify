@@ -1,4 +1,4 @@
-package com.capa.boostify.user.repository.booster;
+package com.capa.boostify.user.repository;
 
 import com.capa.boostify.user.entity.booster.BoosterDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
