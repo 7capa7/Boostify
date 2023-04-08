@@ -1,28 +1,27 @@
 package com.capa.boostify.user.entity.booster;
 
-import com.capa.boostify.user.utils.Division;
+import com.capa.boostify.user.entity.User;
+import com.capa.boostify.user.utils.BoosterApplicationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Year;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Booster_Details")
-public class BoosterDetails {
+@Table(name = "Booster_Application")
+public class BoosterApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @OneToOne()
+    User user;
+    @OneToOne()
+    BoosterDetails boosterDetails;
     @Enumerated(EnumType.STRING)
-    private Division highestDivision;
-    @Enumerated(EnumType.STRING)
-    private Division actualDivision;
-    private Integer inGameHours;
-    private Year firstSeasonYear;
+    private BoosterApplicationStatus boosterApplicationStatus;
 }
