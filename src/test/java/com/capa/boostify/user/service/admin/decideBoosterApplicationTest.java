@@ -60,6 +60,28 @@ class decideBoosterApplicationTest {
     }
 
     @Test
+    public void testDecideBoosterApplicationWithAcceptedStatus() {
+        BoosterApplicationDecide boosterApplicationDecide = new BoosterApplicationDecide();
+        boosterApplicationDecide.setBoosterApplicationId(UUID.randomUUID().toString());
+        boosterApplicationDecide.setBoosterApplicationStatus(BoosterApplicationStatus.ACCEPTED);
+
+        BoosterApplication boosterApplication = new BoosterApplication();
+        boosterApplication.setId(UUID.randomUUID().toString());
+        boosterApplication.setBoosterApplicationStatus(BoosterApplicationStatus.PENDING);
+
+        when(boosterApplicationRepository.findById(boosterApplicationDecide.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
+        when(userRepository.findById(any())).thenReturn(Optional.of(new User()));
+        boosterApplication.setUser(User.builder().id(UUID.randomUUID().toString()).build());
+        String result = adminService.decideBoosterApplication(boosterApplicationDecide);
+
+        verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecide.getBoosterApplicationId());
+        verify(boosterApplicationRepository, times(1)).save(boosterApplication);
+
+        assertEquals("Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status updated for Accepted, this user is now booster !", result);
+        assertEquals(BoosterApplicationStatus.ACCEPTED, boosterApplication.getBoosterApplicationStatus());
+    }
+
+    @Test
     public void testDecideBoosterApplicationWithInvalidData() {
         BoosterApplicationDecide boosterApplicationDecide = new BoosterApplicationDecide();
 
