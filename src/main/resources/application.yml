@@ -1,0 +1,11 @@
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:postgresql://localhost:5432/boostify-db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
