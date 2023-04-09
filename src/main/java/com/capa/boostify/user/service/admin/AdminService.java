@@ -8,8 +8,13 @@ import com.capa.boostify.user.repository.UserRepository;
 import com.capa.boostify.user.utils.BoosterApplicationDecide;
 import com.capa.boostify.user.utils.BoosterApplicationStatus;
 import com.capa.boostify.user.utils.Role;
+import com.capa.boostify.user.utils.dto.BoosterApplicationDto;
+import com.capa.boostify.user.utils.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +36,29 @@ public class AdminService {
                 return "Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status updated for Declined !";
             }
 
-            if(boosterApplicationDecide.getBoosterApplicationStatus().equals(BoosterApplicationStatus.PENDING)){
+            if (boosterApplicationDecide.getBoosterApplicationStatus().equals(BoosterApplicationStatus.PENDING)) {
                 return "Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status not changed !";
             }
-            return updateUserToBooster(boosterApplication,boosterApplicationDecide);
+            return updateUserToBooster(boosterApplication, boosterApplicationDecide);
         }
 
         return "This application is already resolved !";
+    }
+
+    public List<BoosterApplicationDto> getBoosterApplications(boolean pendingOnly) {
+        if (pendingOnly) {
+            return mapBoosterApplicationsToDto(boosterApplicationRepository.findBoosterApplicationsByBoosterApplicationStatus(BoosterApplicationStatus.PENDING));
+        } else return mapBoosterApplicationsToDto(boosterApplicationRepository.findAll());
+    }
+
+    private List<BoosterApplicationDto> mapBoosterApplicationsToDto(List<BoosterApplication> boosterApplications) {
+        return boosterApplications.stream().map(boosterApplication -> {
+            UserDto userDto =
+                    new UserDto(boosterApplication.getUser().getId(), boosterApplication.getUser().getEmail(), boosterApplication.getUser().getRole());
+
+            return new BoosterApplicationDto(boosterApplication.getId(), userDto, boosterApplication.getBoosterDetails(),
+                    boosterApplication.getBoosterApplicationStatus());
+        }).collect(Collectors.toList());
     }
 
     private String updateUserToBooster(BoosterApplication boosterApplication, BoosterApplicationDecide boosterApplicationDecide) {
@@ -48,4 +69,5 @@ public class AdminService {
 
         return "Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status updated for Accepted, this user is now booster !";
     }
+
 }
