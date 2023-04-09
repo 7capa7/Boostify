@@ -3,6 +3,9 @@ package com.capa.boostify.utils;
 import com.capa.boostify.authentication.exception.InvalidRegisterDataException;
 import com.capa.boostify.authentication.exception.UserAlreadyExistsException;
 import com.capa.boostify.authentication.exception.UserDoesNotExistOrPasswordIsInvalidException;
+import com.capa.boostify.boostOrder.exception.BoostingOrderAlreadyExistsException;
+import com.capa.boostify.boostOrder.exception.InvalidBoostingOrderDataException;
+import com.capa.boostify.boostOrder.exception.InvalidDivisionsException;
 import com.capa.boostify.user.exception.BoosterApplicationAlreadyRegisteredException;
 import com.capa.boostify.user.exception.InvalidBoosterApplicationDataException;
 import com.capa.boostify.user.exception.InvalidBoosterApplicationDecideDataException;
@@ -46,5 +49,23 @@ public class CustomExceptionHandler {
     public ResponseEntity<ExceptionResponse> invalidBoosterApplicationDecideData(InvalidBoosterApplicationDecideDataException ex){
         ExceptionResponse exceptionResponse = new ExceptionResponse("400",ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidBoostingOrderDataException.class)
+    public ResponseEntity<ExceptionResponse> invalidBoostingOrderData(InvalidBoostingOrderDataException ex){
+        ExceptionResponse exceptionResponse = new ExceptionResponse("400",ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BoostingOrderAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> boostingOrderAlreadyExists(BoostingOrderAlreadyExistsException ex){
+        ExceptionResponse exceptionResponse = new ExceptionResponse("409",ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidDivisionsException.class)
+    public ResponseEntity<ExceptionResponse> invalidDivisions(InvalidDivisionsException ex){
+        ExceptionResponse exceptionResponse = new ExceptionResponse("409",ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.CONFLICT);
     }
 }
