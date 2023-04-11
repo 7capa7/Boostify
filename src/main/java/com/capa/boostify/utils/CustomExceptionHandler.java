@@ -6,6 +6,7 @@ import com.capa.boostify.authentication.exception.UserDoesNotExistOrPasswordIsIn
 import com.capa.boostify.boostOrder.exception.BoostingOrderAlreadyExistsException;
 import com.capa.boostify.boostOrder.exception.InvalidBoostingOrderDataException;
 import com.capa.boostify.boostOrder.exception.InvalidDivisionsException;
+import com.capa.boostify.boostOrder.exception.InvalidIdException;
 import com.capa.boostify.user.exception.BoosterApplicationAlreadyRegisteredException;
 import com.capa.boostify.user.exception.InvalidBoosterApplicationDataException;
 import com.capa.boostify.user.exception.InvalidBoosterApplicationDecideDataException;
@@ -67,5 +68,11 @@ public class CustomExceptionHandler {
     public ResponseEntity<ExceptionResponse> invalidDivisions(InvalidDivisionsException ex){
         ExceptionResponse exceptionResponse = new ExceptionResponse("409",ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidIdException.class)
+    public ResponseEntity<ExceptionResponse> invalidId(InvalidIdException ex){
+        ExceptionResponse exceptionResponse = new ExceptionResponse("400",ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
