@@ -24,8 +24,9 @@ public class CreateBoostingOrderRequest {
     @JsonDeserialize(using = DivisionEnumDeserializer.class)
     private Division expectedDivision;
 
-    public boolean isValid(){
-        if(accountNickname==null||accountPassword==null||actualDivision==null||expectedDivision==null) return false;
+    public boolean isValid() {
+        if (accountNickname == null || accountPassword == null || actualDivision == null || expectedDivision == null)
+            return false;
         return !accountNickname.isBlank() && !accountPassword.isBlank() && !actualDivision.equals(Division.NONE) && !expectedDivision.equals(Division.NONE);
     }
 }

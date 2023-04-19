@@ -14,7 +14,7 @@ public class LoginRequest {
     private String password;
 
     public boolean isValid() {
-        if(email == null || password == null) return false;
+        if (email == null || password == null) return false;
         return !email.isBlank() && !password.isBlank();
     }
 }

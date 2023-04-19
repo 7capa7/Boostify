@@ -16,8 +16,8 @@ public class BoosterApplicationDecide {
     @JsonDeserialize(using = BoosterApplicationStatusDeserializer.class)
     private BoosterApplicationStatus boosterApplicationStatus;
 
-    public boolean isValid(){
-        if(boosterApplicationId==null || boosterApplicationStatus == null) return false;
+    public boolean isValid() {
+        if (boosterApplicationId == null || boosterApplicationStatus == null) return false;
         return !boosterApplicationId.isBlank() && !boosterApplicationStatus.equals(BoosterApplicationStatus.NONE);
     }
 }

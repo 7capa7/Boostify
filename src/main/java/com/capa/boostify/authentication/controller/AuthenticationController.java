@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto register(@RequestBody RegisterRequest registerRequest){
+    public UserDto register(@RequestBody RegisterRequest registerRequest) {
         return authenticationService.register(registerRequest);
     }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public LoginResponse authenticate(@RequestBody LoginRequest loginRequest){
+    public LoginResponse authenticate(@RequestBody LoginRequest loginRequest) {
         return authenticationService.login(loginRequest);
     }
 }

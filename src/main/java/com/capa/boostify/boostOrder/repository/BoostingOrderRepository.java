@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface BoostingOrderRepository extends JpaRepository<BoostingOrder, String> {
     List<BoostingOrder> findBoostingOrdersByUser(User user);
+
     List<BoostingOrder> findBoostingOrdersByBoosterIsNull();
 }

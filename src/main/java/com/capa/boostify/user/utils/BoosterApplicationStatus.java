@@ -1,7 +1,7 @@
 package com.capa.boostify.user.utils;
 
 public enum BoosterApplicationStatus {
-    PENDING,ACCEPTED,DECLINED,NONE;
+    PENDING, ACCEPTED, DECLINED, NONE;
 
     public static boolean isValidEnumValue(String value) {
         try {

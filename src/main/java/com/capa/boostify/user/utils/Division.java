@@ -1,7 +1,7 @@
 package com.capa.boostify.user.utils;
 
 public enum Division {
-    IRON,BRONZE,SILVER,GOLD,PLATINUM,DIAMOND,MASTER,CHALLENGER,NONE;
+    IRON, BRONZE, SILVER, GOLD, PLATINUM, DIAMOND, MASTER, CHALLENGER, NONE;
 
     public static boolean isValidEnumValue(String value) {
         try {

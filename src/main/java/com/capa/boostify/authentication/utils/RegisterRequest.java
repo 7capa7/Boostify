@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class RegisterRequest {
     private String email;
     private String password;
+
     public boolean isValid() {
         if (email == null || password == null)
             return false;
