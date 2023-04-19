@@ -123,7 +123,7 @@ class DecideBoosterApplicationTest {
 
         String result = adminService.decideBoosterApplication(boosterApplicationDecide);
 
-        assertEquals(result,"This application is already resolved !");
+        assertEquals(result, "This application is already resolved !");
 
     }
 

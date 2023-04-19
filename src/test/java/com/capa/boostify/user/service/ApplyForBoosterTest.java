@@ -34,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import java.util.UUID;
+
 class ApplyForBoosterTest {
     @Mock
     private BoosterApplicationRepository boosterApplicationRepository;
@@ -160,6 +161,7 @@ class ApplyForBoosterTest {
                 .password("password")
                 .build();
     }
+
     private BoosterApplicationRequest createBoosterApplicationRequest() {
         return BoosterApplicationRequest.builder()
                 .inGameHours(1231)

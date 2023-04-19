@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BoosterApplicationRepository extends JpaRepository<BoosterApplication,String> {
+public interface BoosterApplicationRepository extends JpaRepository<BoosterApplication, String> {
     Optional<BoosterApplication> findBoosterApplicationByUserAndBoosterApplicationStatus(User user, BoosterApplicationStatus boosterApplicationStatus);
+
     List<BoosterApplication> findBoosterApplicationsByBoosterApplicationStatus(BoosterApplicationStatus boosterApplicationStatus);
 }
