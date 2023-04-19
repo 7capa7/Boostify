@@ -18,8 +18,14 @@ public class BoosterBoostingOrderController {
     public List<BoostingOrderDto> getBoostingOrders(){
         return boosterBoostingOrderService.getBoostingOrders();
     }
-    @PutMapping("assign-boosting-order")
+    @PostMapping("assign-boosting-order")
+    @ResponseStatus(HttpStatus.OK)
     public String assignBoostingOrder(@RequestParam(name = "id") String boostingOrderId){
         return boosterBoostingOrderService.assignBoostingOrder(boostingOrderId);
+    }
+    @PostMapping("complete-boosting-order")
+    @ResponseStatus(HttpStatus.OK)
+    public String completeBoostingOrder(@RequestParam(name = "id") String boostingOrderId){
+        return boosterBoostingOrderService.completeBoostingOrder(boostingOrderId);
     }
 }

@@ -32,9 +32,29 @@ public class BoosterBoostingOrderService {
         BoostingOrder boostingOrder = boostingOrderRepository.findById(boostingOrderId)
                 .orElseThrow(InvalidIdException::new);
 
+        if (boostingOrder.isFinished() || boostingOrder.getBooster() != null) throw new InvalidIdException();
+
         boostingOrder.setBooster((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         boostingOrderRepository.save(boostingOrder);
 
         return "Boosting order " + boostingOrderId + " is now assigned to you!";
+    }
+
+    public String completeBoostingOrder(String boostingOrderId) {
+        if (boostingOrderId == null) throw new InvalidIdException();
+
+        BoostingOrder boostingOrder = boostingOrderRepository.findById(boostingOrderId)
+                .orElseThrow(InvalidIdException::new);
+
+        if (boostingOrder.isFinished() || boostingOrder.getBooster() == null) throw new InvalidIdException();
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!boostingOrder.getBooster().equals(user)) throw new InvalidIdException();
+
+        boostingOrder.setFinished(true);
+        boostingOrderRepository.save(boostingOrder);
+        return "Boosting order " + boostingOrderId + " has been set as completed";
+
     }
 }
