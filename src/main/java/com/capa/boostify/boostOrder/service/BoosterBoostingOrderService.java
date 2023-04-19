@@ -35,6 +35,7 @@ public class BoosterBoostingOrderService {
         if (boostingOrder.isFinished() || boostingOrder.getBooster() != null) throw new InvalidIdException();
 
         boostingOrder.setBooster((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+
         boostingOrderRepository.save(boostingOrder);
 
         return "Boosting order " + boostingOrderId + " is now assigned to you!";
