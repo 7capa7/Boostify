@@ -1,13 +1,14 @@
 package com.capa.boostify.user.service.admin;
 
-import com.capa.boostify.user.entity.User;
-import com.capa.boostify.user.entity.booster.BoosterApplication;
-import com.capa.boostify.user.entity.booster.BoosterDetails;
-import com.capa.boostify.user.repository.BoosterApplicationRepository;
-import com.capa.boostify.user.utils.BoosterApplicationStatus;
-import com.capa.boostify.user.utils.Role;
-import com.capa.boostify.user.utils.dto.BoosterApplicationDto;
-import com.capa.boostify.user.utils.dto.UserDto;
+import com.capa.boostify.service.AdminService;
+import com.capa.boostify.entity.User;
+import com.capa.boostify.entity.BoosterApplication;
+import com.capa.boostify.entity.BoosterDetails;
+import com.capa.boostify.repository.BoosterApplicationRepository;
+import com.capa.boostify.utils.BoosterApplicationStatus;
+import com.capa.boostify.utils.Role;
+import com.capa.boostify.utils.dto.BoosterApplicationDto;
+import com.capa.boostify.utils.dto.UserDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

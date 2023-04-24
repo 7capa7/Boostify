@@ -1,15 +1,16 @@
 package com.capa.boostify.boostOrder.service;
 
-import com.capa.boostify.boostOrder.entity.BoostingOrder;
-import com.capa.boostify.boostOrder.exception.BoostingOrderAlreadyExistsException;
-import com.capa.boostify.boostOrder.exception.InvalidBoostingOrderDataException;
-import com.capa.boostify.boostOrder.exception.InvalidDivisionsException;
-import com.capa.boostify.boostOrder.repository.BoostingOrderRepository;
-import com.capa.boostify.boostOrder.utils.BoostingOrderDto;
-import com.capa.boostify.boostOrder.utils.CreateBoostingOrderRequest;
-import com.capa.boostify.user.entity.User;
-import com.capa.boostify.user.utils.Division;
-import com.capa.boostify.user.utils.Role;
+import com.capa.boostify.entity.BoostingOrder;
+import com.capa.boostify.exception.BoostingOrderAlreadyExistsException;
+import com.capa.boostify.exception.InvalidBoostingOrderDataException;
+import com.capa.boostify.exception.InvalidDivisionsException;
+import com.capa.boostify.repository.BoostingOrderRepository;
+import com.capa.boostify.service.UserBoostingOrderService;
+import com.capa.boostify.utils.dto.BoostingOrderDto;
+import com.capa.boostify.utils.CreateBoostingOrderRequest;
+import com.capa.boostify.entity.User;
+import com.capa.boostify.utils.Division;
+import com.capa.boostify.utils.Role;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;

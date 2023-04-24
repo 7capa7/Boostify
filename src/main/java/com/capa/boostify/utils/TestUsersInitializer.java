@@ -1,11 +1,9 @@
 package com.capa.boostify.utils;
 
-import com.capa.boostify.user.entity.User;
-import com.capa.boostify.user.entity.booster.BoosterDetails;
-import com.capa.boostify.user.repository.UserRepository;
-import com.capa.boostify.user.repository.BoosterDetailsRepository;
-import com.capa.boostify.user.utils.Division;
-import com.capa.boostify.user.utils.Role;
+import com.capa.boostify.entity.User;
+import com.capa.boostify.entity.BoosterDetails;
+import com.capa.boostify.repository.UserRepository;
+import com.capa.boostify.repository.BoosterDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
