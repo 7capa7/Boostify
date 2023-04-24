@@ -1,9 +1,10 @@
 package com.capa.boostify.boostOrder.service;
 
-import com.capa.boostify.boostOrder.entity.BoostingOrder;
-import com.capa.boostify.boostOrder.exception.InvalidIdException;
-import com.capa.boostify.boostOrder.repository.BoostingOrderRepository;
-import com.capa.boostify.user.entity.User;
+import com.capa.boostify.entity.BoostingOrder;
+import com.capa.boostify.exception.InvalidIdException;
+import com.capa.boostify.repository.BoostingOrderRepository;
+import com.capa.boostify.service.BoosterBoostingOrderService;
+import com.capa.boostify.entity.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,18 +1,18 @@
 package com.capa.boostify.user.service.admin;
 
-import com.capa.boostify.user.entity.User;
-import com.capa.boostify.user.entity.booster.BoosterApplication;
-import com.capa.boostify.user.exception.InvalidBoosterApplicationDecideDataException;
-import com.capa.boostify.user.repository.BoosterApplicationRepository;
-import com.capa.boostify.user.repository.UserRepository;
-import com.capa.boostify.user.utils.BoosterApplicationDecide;
-import com.capa.boostify.user.utils.BoosterApplicationStatus;
+import com.capa.boostify.service.AdminService;
+import com.capa.boostify.entity.User;
+import com.capa.boostify.entity.BoosterApplication;
+import com.capa.boostify.exception.InvalidBoosterApplicationDecideDataException;
+import com.capa.boostify.repository.BoosterApplicationRepository;
+import com.capa.boostify.repository.UserRepository;
+import com.capa.boostify.utils.BoosterApplicationDecide;
+import com.capa.boostify.utils.BoosterApplicationStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 

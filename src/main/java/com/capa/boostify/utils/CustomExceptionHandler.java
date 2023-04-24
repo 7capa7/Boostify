@@ -1,15 +1,15 @@
 package com.capa.boostify.utils;
 
-import com.capa.boostify.authentication.exception.InvalidRegisterDataException;
-import com.capa.boostify.authentication.exception.UserAlreadyExistsException;
-import com.capa.boostify.authentication.exception.UserDoesNotExistOrPasswordIsInvalidException;
-import com.capa.boostify.boostOrder.exception.BoostingOrderAlreadyExistsException;
-import com.capa.boostify.boostOrder.exception.InvalidBoostingOrderDataException;
-import com.capa.boostify.boostOrder.exception.InvalidDivisionsException;
-import com.capa.boostify.boostOrder.exception.InvalidIdException;
-import com.capa.boostify.user.exception.BoosterApplicationAlreadyRegisteredException;
-import com.capa.boostify.user.exception.InvalidBoosterApplicationDataException;
-import com.capa.boostify.user.exception.InvalidBoosterApplicationDecideDataException;
+import com.capa.boostify.exception.InvalidRegisterDataException;
+import com.capa.boostify.exception.UserAlreadyExistsException;
+import com.capa.boostify.exception.UserDoesNotExistOrPasswordIsInvalidException;
+import com.capa.boostify.exception.BoostingOrderAlreadyExistsException;
+import com.capa.boostify.exception.InvalidBoostingOrderDataException;
+import com.capa.boostify.exception.InvalidDivisionsException;
+import com.capa.boostify.exception.InvalidIdException;
+import com.capa.boostify.exception.BoosterApplicationAlreadyRegisteredException;
+import com.capa.boostify.exception.InvalidBoosterApplicationDataException;
+import com.capa.boostify.exception.InvalidBoosterApplicationDecideDataException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
