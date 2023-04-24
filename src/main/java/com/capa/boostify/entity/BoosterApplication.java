@@ -1,6 +1,6 @@
 package com.capa.boostify.entity;
 
-import com.capa.boostify.utils.BoosterApplicationStatus;
+import com.capa.boostify.utils.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Booster_Application")
+@Table(name = "booster_application")
 public class BoosterApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,5 +22,5 @@ public class BoosterApplication {
     @OneToOne()
     BoosterDetails boosterDetails;
     @Enumerated(EnumType.STRING)
-    private BoosterApplicationStatus boosterApplicationStatus;
+    private ApplicationStatus applicationStatus;
 }

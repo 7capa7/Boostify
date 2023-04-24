@@ -13,19 +13,19 @@ import java.util.List;
 @RequestMapping("/api/booster")
 public class BoosterBoostingOrderController {
     private final BoosterBoostingOrderService boosterBoostingOrderService;
-    @GetMapping("boosting-orders")
+    @GetMapping("orders")
     @ResponseStatus(HttpStatus.OK)
     public List<BoostingOrderDto> getBoostingOrders(){
         return boosterBoostingOrderService.getBoostingOrders();
     }
-    @PostMapping("assign-boosting-order")
+    @GetMapping("assign")
     @ResponseStatus(HttpStatus.OK)
-    public String assignBoostingOrder(@RequestParam(name = "id") String boostingOrderId){
-        return boosterBoostingOrderService.assignBoostingOrder(boostingOrderId);
+    public String assignBoostingOrder(@RequestParam(name = "id") String orderId){
+        return boosterBoostingOrderService.assignBoostingOrder(orderId);
     }
-    @PostMapping("complete-boosting-order")
+        @GetMapping("complete")
     @ResponseStatus(HttpStatus.OK)
-    public String completeBoostingOrder(@RequestParam(name = "id") String boostingOrderId){
-        return boosterBoostingOrderService.completeBoostingOrder(boostingOrderId);
+    public String completeBoostingOrder(@RequestParam(name = "id") String orderId){
+        return boosterBoostingOrderService.completeBoostingOrder(orderId);
     }
 }

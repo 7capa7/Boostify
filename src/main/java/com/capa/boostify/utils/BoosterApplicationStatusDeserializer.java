@@ -8,18 +8,18 @@ import io.micrometer.common.util.StringUtils;
 
 import java.io.IOException;
 
-public class BoosterApplicationStatusDeserializer extends JsonDeserializer<BoosterApplicationStatus> {
+public class BoosterApplicationStatusDeserializer extends JsonDeserializer<ApplicationStatus> {
     @Override
-    public BoosterApplicationStatus deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public ApplicationStatus deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
         String value = jsonParser.readValueAs(String.class);
         if (StringUtils.isBlank(value)) {
-            return BoosterApplicationStatus.NONE;
+            return ApplicationStatus.NONE;
         }
         value = value.toUpperCase();
-        if (!BoosterApplicationStatus.isValidEnumValue(value)) {
-            return BoosterApplicationStatus.NONE;
+        if (!ApplicationStatus.isValidEnumValue(value)) {
+            return ApplicationStatus.NONE;
         }
 
-        return BoosterApplicationStatus.valueOf(value);
+        return ApplicationStatus.valueOf(value);
     }
 }

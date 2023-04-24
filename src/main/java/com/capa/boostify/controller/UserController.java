@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
-    @PostMapping("/booster-application")
+    @PostMapping("/apply")
     @ResponseStatus(HttpStatus.OK)
-    public String applyForBooster(@RequestBody BoosterApplicationRequest boosterApplicationRequest){
-        return userService.applyForBooster(boosterApplicationRequest);
+    public String applyForBooster(@RequestBody BoosterApplicationRequest request){
+        return userService.applyForBooster(request);
     }
 }

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserBoostingOrderController {
     private final UserBoostingOrderService userBoostingOrderService;
 
-    @PostMapping("/boosting-order")
+    @PostMapping("/order")
     @ResponseStatus(HttpStatus.CREATED)
-    public BoostingOrderDto createBoostingOrder(@RequestBody CreateBoostingOrderRequest createBoostingOrderRequest){
-        return userBoostingOrderService.createBoostingOrder(createBoostingOrderRequest);
+    public BoostingOrderDto createBoostingOrder(@RequestBody CreateBoostingOrderRequest request){
+        return userBoostingOrderService.createBoostingOrder(request);
     }
 }

@@ -5,8 +5,8 @@ import com.capa.boostify.entity.BoosterApplication;
 import com.capa.boostify.exception.InvalidBoosterApplicationDecideDataException;
 import com.capa.boostify.repository.BoosterApplicationRepository;
 import com.capa.boostify.repository.UserRepository;
-import com.capa.boostify.utils.BoosterApplicationDecide;
-import com.capa.boostify.utils.BoosterApplicationStatus;
+import com.capa.boostify.utils.BoosterApplicationDecision;
+import com.capa.boostify.utils.ApplicationStatus;
 import com.capa.boostify.utils.Role;
 import com.capa.boostify.utils.dto.BoosterApplicationDto;
 import com.capa.boostify.utils.dto.UserDto;
@@ -22,24 +22,24 @@ public class AdminService {
     private final BoosterApplicationRepository boosterApplicationRepository;
     private final UserRepository userRepository;
 
-    public String decideBoosterApplication(BoosterApplicationDecide boosterApplicationDecide) {
-        if (!boosterApplicationDecide.isValid()) throw new InvalidBoosterApplicationDecideDataException();
+    public String decideBoosterApplication(BoosterApplicationDecision decision) {
+        if (!decision.isValid()) throw new InvalidBoosterApplicationDecideDataException();
 
-        BoosterApplication boosterApplication = boosterApplicationRepository.findById(boosterApplicationDecide.getBoosterApplicationId())
+        BoosterApplication application = boosterApplicationRepository.findById(decision.getBoosterApplicationId())
                 .orElseThrow(InvalidBoosterApplicationDecideDataException::new);
 
-        if (boosterApplication.getBoosterApplicationStatus().equals(BoosterApplicationStatus.PENDING)) {
-            boosterApplication.setBoosterApplicationStatus(boosterApplicationDecide.getBoosterApplicationStatus());
-            boosterApplicationRepository.save(boosterApplication);
+        if (application.getApplicationStatus().equals(ApplicationStatus.PENDING)) {
+            application.setApplicationStatus(decision.getApplicationStatus());
+            boosterApplicationRepository.save(application);
 
-            if (boosterApplicationDecide.getBoosterApplicationStatus().equals(BoosterApplicationStatus.DECLINED)) {
-                return "Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status updated for Declined !";
+            if (decision.getApplicationStatus().equals(ApplicationStatus.DECLINED)) {
+                return "Application " + decision.getBoosterApplicationId() + " Status updated for Declined !";
             }
 
-            if (boosterApplicationDecide.getBoosterApplicationStatus().equals(BoosterApplicationStatus.PENDING)) {
-                return "Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status not changed !";
+            if (decision.getApplicationStatus().equals(ApplicationStatus.PENDING)) {
+                return "Application " + decision.getBoosterApplicationId() + " Status not changed !";
             }
-            return updateUserToBooster(boosterApplication, boosterApplicationDecide);
+            return updateUserToBooster(application, decision);
         }
 
         return "This application is already resolved !";
@@ -47,27 +47,27 @@ public class AdminService {
 
     public List<BoosterApplicationDto> getBoosterApplications(boolean pendingOnly) {
         if (pendingOnly) {
-            return mapBoosterApplicationsToDto(boosterApplicationRepository.findBoosterApplicationsByBoosterApplicationStatus(BoosterApplicationStatus.PENDING));
+            return mapBoosterApplicationsToDto(boosterApplicationRepository.findBoosterApplicationsByApplicationStatus(ApplicationStatus.PENDING));
         } else return mapBoosterApplicationsToDto(boosterApplicationRepository.findAll());
     }
 
-    private List<BoosterApplicationDto> mapBoosterApplicationsToDto(List<BoosterApplication> boosterApplications) {
-        return boosterApplications.stream().map(boosterApplication -> {
+    private List<BoosterApplicationDto> mapBoosterApplicationsToDto(List<BoosterApplication> applications) {
+        return applications.stream().map(boosterApplication -> {
             UserDto userDto =
                     new UserDto(boosterApplication.getUser().getId(), boosterApplication.getUser().getEmail(), boosterApplication.getUser().getRole());
 
             return new BoosterApplicationDto(boosterApplication.getId(), userDto, boosterApplication.getBoosterDetails(),
-                    boosterApplication.getBoosterApplicationStatus());
+                    boosterApplication.getApplicationStatus());
         }).collect(Collectors.toList());
     }
 
-    private String updateUserToBooster(BoosterApplication boosterApplication, BoosterApplicationDecide boosterApplicationDecide) {
-        User user = userRepository.findById(boosterApplication.getUser().getId()).orElseThrow(InvalidBoosterApplicationDecideDataException::new);
+    private String updateUserToBooster(BoosterApplication application, BoosterApplicationDecision decision) {
+        User user = userRepository.findById(application.getUser().getId()).orElseThrow(InvalidBoosterApplicationDecideDataException::new);
         user.setRole(Role.BOOSTER);
-        user.setBoosterDetails(boosterApplication.getBoosterDetails());
+        user.setBoosterDetails(application.getBoosterDetails());
         userRepository.save(user);
 
-        return "Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status updated for Accepted, this user is now booster !";
+        return "Application " + decision.getBoosterApplicationId() + " Status updated for Accepted, this user is now booster !";
     }
 
 }

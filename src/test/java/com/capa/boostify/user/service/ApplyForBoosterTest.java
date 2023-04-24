@@ -9,7 +9,7 @@ import com.capa.boostify.exception.InvalidBoosterApplicationDataException;
 import com.capa.boostify.repository.BoosterApplicationRepository;
 import com.capa.boostify.repository.BoosterDetailsRepository;
 import com.capa.boostify.utils.BoosterApplicationRequest;
-import com.capa.boostify.utils.BoosterApplicationStatus;
+import com.capa.boostify.utils.ApplicationStatus;
 import com.capa.boostify.utils.Division;
 import com.capa.boostify.utils.Role;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,13 +69,13 @@ class ApplyForBoosterTest {
                 .build();
 
         BoosterApplication boosterApplication = BoosterApplication.builder()
-                .boosterApplicationStatus(BoosterApplicationStatus.PENDING)
+                .applicationStatus(ApplicationStatus.PENDING)
                 .user(user)
                 .boosterDetails(boosterDetails)
                 .build();
 
         when(authentication.getPrincipal()).thenReturn(user);
-        when(boosterApplicationRepository.findBoosterApplicationByUserAndBoosterApplicationStatus(user, BoosterApplicationStatus.PENDING)).thenReturn(Optional.empty());
+        when(boosterApplicationRepository.findBoosterApplicationByUserAndApplicationStatus(user, ApplicationStatus.PENDING)).thenReturn(Optional.empty());
         when(boosterDetailsRepository.save(boosterDetails)).thenReturn(boosterDetails);
         when(boosterApplicationRepository.save(boosterApplication)).thenReturn(boosterApplication);
 
@@ -120,17 +120,17 @@ class ApplyForBoosterTest {
                 .id(UUID.randomUUID().toString())
                 .user(user)
                 .boosterDetails(new BoosterDetails())
-                .boosterApplicationStatus(BoosterApplicationStatus.PENDING)
+                .applicationStatus(ApplicationStatus.PENDING)
                 .build();
 
         Mockito.when(securityContext.getAuthentication()).thenReturn(new UsernamePasswordAuthenticationToken(user, null));
-        Mockito.when(boosterApplicationRepository.findBoosterApplicationByUserAndBoosterApplicationStatus(user, BoosterApplicationStatus.PENDING))
+        Mockito.when(boosterApplicationRepository.findBoosterApplicationByUserAndApplicationStatus(user, ApplicationStatus.PENDING))
                 .thenReturn(Optional.of(existingApplication));
 
         Throwable exception = assertThrows(BoosterApplicationAlreadyRegisteredException.class, () -> userService.applyForBooster(request));
 
         assertEquals("We already registered your application! Please wait for decision", exception.getMessage());
-        verify(boosterApplicationRepository, Mockito.times(1)).findBoosterApplicationByUserAndBoosterApplicationStatus(user, BoosterApplicationStatus.PENDING);
+        verify(boosterApplicationRepository, Mockito.times(1)).findBoosterApplicationByUserAndApplicationStatus(user, ApplicationStatus.PENDING);
         verify(boosterDetailsRepository, never()).save(Mockito.any(BoosterDetails.class));
         verify(boosterApplicationRepository, never()).save(Mockito.any(BoosterApplication.class));
     }

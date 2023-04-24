@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoosterApplicationDecide {
+public class BoosterApplicationDecision {
     private String boosterApplicationId;
 
     @JsonDeserialize(using = BoosterApplicationStatusDeserializer.class)
-    private BoosterApplicationStatus boosterApplicationStatus;
+    private ApplicationStatus applicationStatus;
 
     public boolean isValid() {
-        if (boosterApplicationId == null || boosterApplicationStatus == null) return false;
-        return !boosterApplicationId.isBlank() && !boosterApplicationStatus.equals(BoosterApplicationStatus.NONE);
+        if (boosterApplicationId == null || applicationStatus == null) return false;
+        return !boosterApplicationId.isBlank() && !applicationStatus.equals(ApplicationStatus.NONE);
     }
 }

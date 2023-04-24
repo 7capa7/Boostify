@@ -17,13 +17,13 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto register(@RequestBody RegisterRequest registerRequest) {
-        return authenticationService.register(registerRequest);
+    public UserDto register(@RequestBody RegisterRequest request) {
+        return authenticationService.register(request);
     }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public LoginResponse authenticate(@RequestBody LoginRequest loginRequest) {
-        return authenticationService.login(loginRequest);
+    public LoginResponse authenticate(@RequestBody LoginRequest request) {
+        return authenticationService.login(request);
     }
 }
