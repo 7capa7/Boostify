@@ -6,8 +6,8 @@ import com.capa.boostify.entity.BoosterApplication;
 import com.capa.boostify.exception.InvalidBoosterApplicationDecideDataException;
 import com.capa.boostify.repository.BoosterApplicationRepository;
 import com.capa.boostify.repository.UserRepository;
-import com.capa.boostify.utils.BoosterApplicationDecide;
-import com.capa.boostify.utils.BoosterApplicationStatus;
+import com.capa.boostify.utils.BoosterApplicationDecision;
+import com.capa.boostify.utils.ApplicationStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,52 +35,52 @@ class DecideBoosterApplicationTest {
 
     @Test
     public void testDecideBoosterApplicationWithDeclinedStatus() {
-        BoosterApplicationDecide boosterApplicationDecide = new BoosterApplicationDecide();
-        boosterApplicationDecide.setBoosterApplicationId(UUID.randomUUID().toString());
-        boosterApplicationDecide.setBoosterApplicationStatus(BoosterApplicationStatus.DECLINED);
+        BoosterApplicationDecision boosterApplicationDecision = new BoosterApplicationDecision();
+        boosterApplicationDecision.setBoosterApplicationId(UUID.randomUUID().toString());
+        boosterApplicationDecision.setApplicationStatus(ApplicationStatus.DECLINED);
 
         BoosterApplication boosterApplication = new BoosterApplication();
         boosterApplication.setId(UUID.randomUUID().toString());
-        boosterApplication.setBoosterApplicationStatus(BoosterApplicationStatus.PENDING);
+        boosterApplication.setApplicationStatus(ApplicationStatus.PENDING);
 
-        when(boosterApplicationRepository.findById(boosterApplicationDecide.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
+        when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
 
-        String result = adminService.decideBoosterApplication(boosterApplicationDecide);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
 
-        verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecide.getBoosterApplicationId());
+        verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecision.getBoosterApplicationId());
         verify(boosterApplicationRepository, times(1)).save(boosterApplication);
 
-        assertEquals("Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status updated for Declined !", result);
-        assertEquals(BoosterApplicationStatus.DECLINED, boosterApplication.getBoosterApplicationStatus());
+        assertEquals("Application " + boosterApplicationDecision.getBoosterApplicationId() + " Status updated for Declined !", result);
+        assertEquals(ApplicationStatus.DECLINED, boosterApplication.getApplicationStatus());
     }
 
     @Test
     public void testDecideBoosterApplicationWithAcceptedStatus() {
-        BoosterApplicationDecide boosterApplicationDecide = new BoosterApplicationDecide();
-        boosterApplicationDecide.setBoosterApplicationId(UUID.randomUUID().toString());
-        boosterApplicationDecide.setBoosterApplicationStatus(BoosterApplicationStatus.ACCEPTED);
+        BoosterApplicationDecision boosterApplicationDecision = new BoosterApplicationDecision();
+        boosterApplicationDecision.setBoosterApplicationId(UUID.randomUUID().toString());
+        boosterApplicationDecision.setApplicationStatus(ApplicationStatus.ACCEPTED);
 
         BoosterApplication boosterApplication = new BoosterApplication();
         boosterApplication.setId(UUID.randomUUID().toString());
-        boosterApplication.setBoosterApplicationStatus(BoosterApplicationStatus.PENDING);
+        boosterApplication.setApplicationStatus(ApplicationStatus.PENDING);
 
-        when(boosterApplicationRepository.findById(boosterApplicationDecide.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
+        when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
         when(userRepository.findById(any())).thenReturn(Optional.of(new User()));
         boosterApplication.setUser(User.builder().id(UUID.randomUUID().toString()).build());
-        String result = adminService.decideBoosterApplication(boosterApplicationDecide);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
 
-        verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecide.getBoosterApplicationId());
+        verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecision.getBoosterApplicationId());
         verify(boosterApplicationRepository, times(1)).save(boosterApplication);
 
-        assertEquals("Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status updated for Accepted, this user is now booster !", result);
-        assertEquals(BoosterApplicationStatus.ACCEPTED, boosterApplication.getBoosterApplicationStatus());
+        assertEquals("Application " + boosterApplicationDecision.getBoosterApplicationId() + " Status updated for Accepted, this user is now booster !", result);
+        assertEquals(ApplicationStatus.ACCEPTED, boosterApplication.getApplicationStatus());
     }
 
     @Test
     public void testDecideBoosterApplicationWithInvalidData() {
-        BoosterApplicationDecide boosterApplicationDecide = new BoosterApplicationDecide();
+        BoosterApplicationDecision boosterApplicationDecision = new BoosterApplicationDecision();
 
-        InvalidBoosterApplicationDecideDataException exception = assertThrows(InvalidBoosterApplicationDecideDataException.class, () -> adminService.decideBoosterApplication(boosterApplicationDecide));
+        InvalidBoosterApplicationDecideDataException exception = assertThrows(InvalidBoosterApplicationDecideDataException.class, () -> adminService.decideBoosterApplication(boosterApplicationDecision));
 
         verify(boosterApplicationRepository, never()).findById(anyString());
         verify(boosterApplicationRepository, never()).save(any(BoosterApplication.class));
@@ -90,38 +90,38 @@ class DecideBoosterApplicationTest {
 
     @Test
     void testDecideBoosterApplicationWithPendingStatus() {
-        BoosterApplicationDecide boosterApplicationDecide = new BoosterApplicationDecide();
-        boosterApplicationDecide.setBoosterApplicationId(UUID.randomUUID().toString());
-        boosterApplicationDecide.setBoosterApplicationStatus(BoosterApplicationStatus.PENDING);
+        BoosterApplicationDecision boosterApplicationDecision = new BoosterApplicationDecision();
+        boosterApplicationDecision.setBoosterApplicationId(UUID.randomUUID().toString());
+        boosterApplicationDecision.setApplicationStatus(ApplicationStatus.PENDING);
 
         BoosterApplication boosterApplication = new BoosterApplication();
         boosterApplication.setId(UUID.randomUUID().toString());
-        boosterApplication.setBoosterApplicationStatus(BoosterApplicationStatus.PENDING);
+        boosterApplication.setApplicationStatus(ApplicationStatus.PENDING);
 
-        when(boosterApplicationRepository.findById(boosterApplicationDecide.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
+        when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
 
-        String result = adminService.decideBoosterApplication(boosterApplicationDecide);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
 
-        verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecide.getBoosterApplicationId());
+        verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecision.getBoosterApplicationId());
         verify(boosterApplicationRepository, times(1)).save(boosterApplication);
 
-        assertEquals("Application " + boosterApplicationDecide.getBoosterApplicationId() + " Status not changed !", result);
-        assertEquals(BoosterApplicationStatus.PENDING, boosterApplication.getBoosterApplicationStatus());
+        assertEquals("Application " + boosterApplicationDecision.getBoosterApplicationId() + " Status not changed !", result);
+        assertEquals(ApplicationStatus.PENDING, boosterApplication.getApplicationStatus());
     }
 
     @Test
     void decideBoosterApplication_whenBoosterApplicationIsNotPending_thenShouldReturnAlreadyResolved() {
-        BoosterApplicationDecide boosterApplicationDecide = new BoosterApplicationDecide();
-        boosterApplicationDecide.setBoosterApplicationId(UUID.randomUUID().toString());
-        boosterApplicationDecide.setBoosterApplicationStatus(BoosterApplicationStatus.DECLINED);
+        BoosterApplicationDecision boosterApplicationDecision = new BoosterApplicationDecision();
+        boosterApplicationDecision.setBoosterApplicationId(UUID.randomUUID().toString());
+        boosterApplicationDecision.setApplicationStatus(ApplicationStatus.DECLINED);
 
         BoosterApplication boosterApplication = new BoosterApplication();
         boosterApplication.setId(UUID.randomUUID().toString());
-        boosterApplication.setBoosterApplicationStatus(BoosterApplicationStatus.ACCEPTED);
+        boosterApplication.setApplicationStatus(ApplicationStatus.ACCEPTED);
 
-        when(boosterApplicationRepository.findById(boosterApplicationDecide.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
+        when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
 
-        String result = adminService.decideBoosterApplication(boosterApplicationDecide);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
 
         assertEquals(result, "This application is already resolved !");
 

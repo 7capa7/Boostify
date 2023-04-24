@@ -83,8 +83,8 @@ class CreateBoostingOrderTest {
 
         BoostingOrder existingOrder = BoostingOrder.builder()
                 .user(user)
-                .accountNickname("existingNickname")
-                .accountPassword("existingPassword")
+                .nickname("existingNickname")
+                .password("existingPassword")
                 .actualDivision(Division.PLATINUM)
                 .expectedDivision(Division.DIAMOND)
                 .booster(null)

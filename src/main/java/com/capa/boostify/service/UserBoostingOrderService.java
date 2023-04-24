@@ -17,28 +17,28 @@ import org.springframework.stereotype.Service;
 public class UserBoostingOrderService {
     private final BoostingOrderRepository boostingOrderRepository;
 
-    public BoostingOrderDto createBoostingOrder(CreateBoostingOrderRequest createBoostingOrderRequest) {
-        if (!createBoostingOrderRequest.isValid()) throw new InvalidBoostingOrderDataException();
+    public BoostingOrderDto createBoostingOrder(CreateBoostingOrderRequest request) {
+        if (!request.isValid()) throw new InvalidBoostingOrderDataException();
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (boostingOrderAlreadyExist(user)) throw new BoostingOrderAlreadyExistsException();
 
-        if (createBoostingOrderRequest.getActualDivision().ordinal() >= createBoostingOrderRequest.getExpectedDivision().ordinal())
+        if (request.getActualDivision().ordinal() >= request.getExpectedDivision().ordinal())
             throw new InvalidDivisionsException();
 
-        BoostingOrder boostingOrder = BoostingOrder.builder()
+        BoostingOrder order = BoostingOrder.builder()
                 .user(user)
-                .accountNickname(createBoostingOrderRequest.getAccountNickname())
-                .accountPassword(createBoostingOrderRequest.getAccountPassword())
-                .actualDivision(createBoostingOrderRequest.getActualDivision())
-                .expectedDivision(createBoostingOrderRequest.getExpectedDivision())
+                .nickname(request.getAccountNickname())
+                .password(request.getAccountPassword())
+                .actualDivision(request.getActualDivision())
+                .expectedDivision(request.getExpectedDivision())
                 .booster(null)
                 .isFinished(false)
                 .build();
 
-        BoostingOrder save = boostingOrderRepository.save(boostingOrder);
+        BoostingOrder save = boostingOrderRepository.save(order);
 
-        return new BoostingOrderDto(save.getId(), save.getAccountNickname(), save.getAccountPassword(), save.getActualDivision(), save.getExpectedDivision());
+        return new BoostingOrderDto(save.getId(), save.getNickname(), save.getPassword(), save.getActualDivision(), save.getExpectedDivision());
     }
 
     private boolean boostingOrderAlreadyExist(User user) {

@@ -21,40 +21,40 @@ public class BoosterBoostingOrderService {
         return mapBoostingOrderToBoostingOrderDto(boostingOrderRepository.findBoostingOrdersByBoosterIsNull());
     }
 
-    private List<BoostingOrderDto> mapBoostingOrderToBoostingOrderDto(List<BoostingOrder> boostingOrders) {
-        return boostingOrders.stream().map(boostingOrder -> new BoostingOrderDto(boostingOrder.getId(), boostingOrder.getAccountNickname(),
-                boostingOrder.getAccountPassword(), boostingOrder.getActualDivision(), boostingOrder.getExpectedDivision())).collect(Collectors.toList());
+    private List<BoostingOrderDto> mapBoostingOrderToBoostingOrderDto(List<BoostingOrder> orders) {
+        return orders.stream().map(order -> new BoostingOrderDto(order.getId(), order.getNickname(),
+                order.getPassword(), order.getActualDivision(), order.getExpectedDivision())).collect(Collectors.toList());
     }
 
-    public String assignBoostingOrder(String boostingOrderId) {
-        if (boostingOrderId == null) throw new InvalidIdException();
+    public String assignBoostingOrder(String orderId) {
+        if (orderId == null) throw new InvalidIdException();
 
-        BoostingOrder boostingOrder = boostingOrderRepository.findById(boostingOrderId)
+        BoostingOrder order = boostingOrderRepository.findById(orderId)
                 .orElseThrow(InvalidIdException::new);
 
-        if (boostingOrder.isFinished() || boostingOrder.getBooster() != null) throw new InvalidIdException();
+        if (order.isFinished() || order.getBooster() != null) throw new InvalidIdException();
 
-        boostingOrder.setBooster((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        boostingOrderRepository.save(boostingOrder);
+        order.setBooster((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        boostingOrderRepository.save(order);
 
-        return "Boosting order " + boostingOrderId + " is now assigned to you!";
+        return "Boosting order " + orderId + " is now assigned to you!";
     }
 
-    public String completeBoostingOrder(String boostingOrderId) {
-        if (boostingOrderId == null) throw new InvalidIdException();
+    public String completeBoostingOrder(String orderId) {
+        if (orderId == null) throw new InvalidIdException();
 
-        BoostingOrder boostingOrder = boostingOrderRepository.findById(boostingOrderId)
+        BoostingOrder order = boostingOrderRepository.findById(orderId)
                 .orElseThrow(InvalidIdException::new);
 
-        if (boostingOrder.isFinished() || boostingOrder.getBooster() == null) throw new InvalidIdException();
+        if (order.isFinished() || order.getBooster() == null) throw new InvalidIdException();
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (!boostingOrder.getBooster().equals(user)) throw new InvalidIdException();
+        if (!order.getBooster().equals(user)) throw new InvalidIdException();
 
-        boostingOrder.setFinished(true);
-        boostingOrderRepository.save(boostingOrder);
-        return "Boosting order " + boostingOrderId + " has been set as completed";
+        order.setFinished(true);
+        boostingOrderRepository.save(order);
+        return "Boosting order " + orderId + " has been set as completed";
 
     }
 }

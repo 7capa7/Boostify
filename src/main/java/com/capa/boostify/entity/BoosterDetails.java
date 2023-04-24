@@ -14,7 +14,7 @@ import java.time.Year;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Booster_Details")
+@Table(name = "booster_details")
 public class BoosterDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

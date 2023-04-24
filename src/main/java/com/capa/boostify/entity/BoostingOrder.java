@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Boosting_Order")
+@Table(name = "boosting_order")
 public class BoostingOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,8 +22,8 @@ public class BoostingOrder {
     private User user;
     @ManyToOne
     private User booster;
-    private String accountNickname;
-    private String accountPassword;
+    private String nickname;
+    private String password;
     @Enumerated(EnumType.STRING)
     private Division actualDivision;
     @Enumerated(EnumType.STRING)

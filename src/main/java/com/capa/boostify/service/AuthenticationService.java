@@ -27,14 +27,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public UserDto register(RegisterRequest registerRequest) {
+    public UserDto register(RegisterRequest request) {
 
-        if (!registerRequest.isValid()) throw new InvalidRegisterDataException();
-        if (checkIfUserExist(registerRequest.getEmail())) throw new UserAlreadyExistsException();
+        if (!request.isValid()) throw new InvalidRegisterDataException();
+        if (checkIfUserExist(request.getEmail())) throw new UserAlreadyExistsException();
 
         User user = User.builder()
-                .email(registerRequest.getEmail())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
 
@@ -44,15 +44,15 @@ public class AuthenticationService {
 
     }
 
-    public LoginResponse login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest request) {
 
-        if (!loginRequest.isValid()) throw new UserDoesNotExistOrPasswordIsInvalidException();
+        if (!request.isValid()) throw new UserDoesNotExistOrPasswordIsInvalidException();
 
-        User user = userRepository.findByEmail(loginRequest.getEmail())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(UserDoesNotExistOrPasswordIsInvalidException::new);
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (BadCredentialsException exception) {
             throw new UserDoesNotExistOrPasswordIsInvalidException();
         }
