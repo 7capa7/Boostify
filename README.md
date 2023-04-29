@@ -11,4 +11,4 @@
 * Application by default starts on localhost : 8080
 * At the start of the app will be created test users: "user@user.pl", "booster@booster.pl", "admin@admin.pl" all with password "password"
 
-![postman](postman.png)
+![postman](postman-view.png)
