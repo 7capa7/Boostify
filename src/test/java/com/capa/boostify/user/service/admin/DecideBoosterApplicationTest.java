@@ -45,7 +45,7 @@ class DecideBoosterApplicationTest {
 
         when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
 
-        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision.getBoosterApplicationId(), boosterApplicationDecision.getApplicationStatus());
 
         verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecision.getBoosterApplicationId());
         verify(boosterApplicationRepository, times(1)).save(boosterApplication);
@@ -67,7 +67,7 @@ class DecideBoosterApplicationTest {
         when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
         when(userRepository.findById(any())).thenReturn(Optional.of(new User()));
         boosterApplication.setUser(User.builder().id(UUID.randomUUID().toString()).build());
-        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision.getBoosterApplicationId(), boosterApplicationDecision.getApplicationStatus());
 
         verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecision.getBoosterApplicationId());
         verify(boosterApplicationRepository, times(1)).save(boosterApplication);
@@ -80,7 +80,8 @@ class DecideBoosterApplicationTest {
     public void testDecideBoosterApplicationWithInvalidData() {
         BoosterApplicationDecision boosterApplicationDecision = new BoosterApplicationDecision();
 
-        InvalidBoosterApplicationDecideDataException exception = assertThrows(InvalidBoosterApplicationDecideDataException.class, () -> adminService.decideBoosterApplication(boosterApplicationDecision));
+        InvalidBoosterApplicationDecideDataException exception = assertThrows(InvalidBoosterApplicationDecideDataException.class,
+                () -> adminService.decideBoosterApplication(boosterApplicationDecision.getBoosterApplicationId(), boosterApplicationDecision.getApplicationStatus()));
 
         verify(boosterApplicationRepository, never()).findById(anyString());
         verify(boosterApplicationRepository, never()).save(any(BoosterApplication.class));
@@ -100,7 +101,7 @@ class DecideBoosterApplicationTest {
 
         when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
 
-        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision.getBoosterApplicationId(), boosterApplicationDecision.getApplicationStatus());
 
         verify(boosterApplicationRepository, times(1)).findById(boosterApplicationDecision.getBoosterApplicationId());
         verify(boosterApplicationRepository, times(1)).save(boosterApplication);
@@ -121,7 +122,7 @@ class DecideBoosterApplicationTest {
 
         when(boosterApplicationRepository.findById(boosterApplicationDecision.getBoosterApplicationId())).thenReturn(Optional.of(boosterApplication));
 
-        String result = adminService.decideBoosterApplication(boosterApplicationDecision);
+        String result = adminService.decideBoosterApplication(boosterApplicationDecision.getBoosterApplicationId(), boosterApplicationDecision.getApplicationStatus());
 
         assertEquals(result, "This application is already resolved !");
 

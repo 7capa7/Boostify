@@ -22,7 +22,8 @@ public class AdminService {
     private final BoosterApplicationRepository boosterApplicationRepository;
     private final UserRepository userRepository;
 
-    public String decideBoosterApplication(BoosterApplicationDecision decision) {
+    public String decideBoosterApplication(String id, ApplicationStatus applicationStatus) {
+            BoosterApplicationDecision decision = new BoosterApplicationDecision(id,applicationStatus);
         if (!decision.isValid()) throw new InvalidBoosterApplicationDecideDataException();
 
         BoosterApplication application = boosterApplicationRepository.findById(decision.getBoosterApplicationId())
